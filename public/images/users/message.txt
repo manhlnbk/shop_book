@@ -1,0 +1,229 @@
+<!--Include Header-->
+<?php
+$GLOBALS['titlePage'] = "Commerce";
+$GLOBALS['classBody'] = "tpl-commerce";
+include 'header.php';
+
+?>
+<!--End Include Header-->
+<link rel="stylesheet" href="./styles/scss/commerce.css">
+<link rel="stylesheet" href="./styles/scss/main.css" />
+
+<!-- Main -->
+<main>
+  
+  <section class="header__commerce">
+    <div class="container-master">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a href="#" class="nav__link">Search</a>
+        </li>
+        <li class="nav__item" id="local-btn">
+          <a href="#" class="nav__link">Localty</a>
+        </li>
+        <li class="nav__item" id="myType">
+          <a href="#" class="nav__link">Type of Business</a>
+          <div class="menu__list">
+            <div class="menu__list__item">
+              <input type="checkbox" id="check__list1">
+              <label for="check__list1">Entrepreneur</label>
+            </div>
+            <div class="menu__list__item">
+              <input type="checkbox" id="check__list2">
+              <label for="check__list2">Small</label>
+            </div>
+            <div class="menu__list__item">
+              <input type="checkbox" id="check__list3">
+              <label for="check__list3">Medium</label>
+            </div>
+            <div class="menu__list__item">
+              <input type="checkbox" id="check__list4">
+              <label for="check__list4">Large</label>
+            </div>
+            <div class="menu__list__item1">
+               <button class="buttonclear">Clear</button>
+               <button class="buttonapply">APPLY</button>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item" id="myBrand">
+          <a href="#" class="nav__link">Brand</a>
+        </li>
+        <li class="nav__item nav__item--special">
+          <a href="#" class="nav__link">
+            FIAT
+          </a>
+          <a href="#" class="nav__link">
+            Crypto
+          </a>
+        </li>
+        <li class="nav__item nav__item--special">
+          <a href="#" class="nav__link">
+            Product
+          </a>
+          <a href="#" class="nav__link">
+            Service
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="commerce__banner">
+    <img src="./images/header/header-img-2.png" alt="">
+  </section>
+
+  <section class="commerce__wrapper ">
+    <div class="container-master">
+      <h1 class="commerce__title">
+        <span>Commerce</span>
+      </h1>
+      <div class="search__commerce" id="input-brand">
+          <form action="" class="search__box">
+            <div class="search__input">
+               <span class="search__icon">
+                 <i class="fa fa-search"></i>
+               </span>
+               <input type="text" placeholder="Search Brand Names..." />
+            </div>
+          <button>Search</button>
+        </form>
+      </div>
+      <div class="row-master">
+      <?php $string = file_get_contents("data/commerce.json");
+       $json = json_decode($string, true);
+          for ($j = 0; $j < 8; $j++){ ?>
+        <div class="col-12 col-md-6 col-xl-3 item_local">
+          <div class="commerce-card">
+            <div class="card__header">
+              <div class="card__image">
+                <img src="./images/commerce/<?php echo $json[$j]['images'] ?>.png" alt="" />
+              </div> 
+              <div class="card__title"><?php echo $json[$j]['title'] ?></div>
+            </div>
+            <div class="card__body">
+              <div class="card__copy">
+              <?php echo $json[$j]['content'] ?>
+              </div>
+            </div>
+            <div class="card__footer">
+              <div class="card__actions">
+                <a href="/hub-shop.php"><span>See more</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <?php } ?>
+      </div>
+    </div>
+    <div class="map-local">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.725944535381!2d105.80473131544319!3d21.003619986012016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313454eb71619947%3A0x8cf3297767bfaa64!2sAgileTech%20Vietnam%20-%20Top%20Quality%20Outsourcing%20Company%20in%20Vietnam!5e0!3m2!1svi!2s!4v1650352474932!5m2!1svi!2s" id="local-iframe" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" hidden></iframe>
+    </div>
+  </section>
+
+</main>
+<!-- End Main -->
+
+
+<!-- Footer -->
+<?php include 'footer.php' ?>
+<!-- End Footer -->
+
+<script>
+window.onload = function() {
+  var header = document.querySelector(".header__commerce .nav__list");
+  var btns = header.querySelectorAll(".nav__item");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+      var typeBtn = document.getElementById('myType');
+      if (this == typeBtn) {
+        var currentshowtype = document.getElementsByClassName("show__type");
+        if (currentshowtype.length) {
+            currentshowtype[0].className = currentshowtype[0].className.replace(" show__type", "");
+        }
+        this.className += " show__type";
+      } else {
+        typeBtn.classList.remove("show__type");
+      }
+      var currentshowtype = document.getElementsByClassName("show__type");
+    if (currentshowtype.length) {
+      currentshowtype[0].className = currentshowtype[0].className.replace(" show__type", "");
+    }
+    this.className += " show__type";
+    // typebrand
+    var typeBrand = document.getElementById('myBrand');
+    var inputBrand = document.getElementById("input-brand");
+    if (this == typeBrand) {
+        var currentshowbrand = document.getElementsByClassName("show__brand");
+       if (currentshowbrand.length) {
+        currentshowbrand[0].className = currentshowbrand[0].className.replace(" show__brand", "");
+       }
+       inputBrand.className += " show__brand";
+      } else {
+        inputBrand.classList.remove("show__brand");
+      }
+    // end type Brand
+    var current = document.getElementsByClassName("active");
+    if (current.length) {
+        current[0].className = current[0].className.replace(" active", "");
+    }
+    this.className += " active";
+    
+ });
+  }
+}
+</script>
+<script>
+window.onload = function() {
+  var header = document.querySelector(".header__commerce .nav__list");
+  var btns = header.querySelectorAll(".nav__item");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+      var typeBtn = document.getElementById('local-btn');
+      if (this == typeBtn) {
+        $('.row-master').removeClass('row-master').addClass('local-master');
+        $('.item_local').removeClass('col-xl-3').addClass('col-xl-4');
+        $('#local-iframe').attr("hidden", false);
+      } else {
+        $('.local-master').removeClass('local-master').addClass('row-master');
+        $('.item_local').removeClass('col-xl-4').addClass('col-xl-3');
+        $('#local-iframe').attr("hidden", true);
+      }
+      var currentshowtype = document.getElementsByClassName("show__type");
+    if (currentshowtype.length) {
+      currentshowtype[0].className = currentshowtype[0].className.replace(" show__type", "");
+    }
+    this.className += " show__type";
+    // typebrand
+    var typeBrand = document.getElementById('myBrand');
+    var inputBrand = document.getElementById("input-brand");
+    if (this == typeBrand) {
+        var currentshowbrand = document.getElementsByClassName("show__brand");
+       if (currentshowbrand.length) {
+        currentshowbrand[0].className = currentshowbrand[0].className.replace(" show__brand", "");
+       }
+       inputBrand.className += " show__brand";
+      } else {
+        inputBrand.classList.remove("show__brand");
+      }
+    // end type Brand
+    var current = document.getElementsByClassName("active");
+    if (current.length) {
+        current[0].className = current[0].className.replace(" active", "");
+    }
+    this.className += " active";
+    
+ });
+  }
+}
+</script>
+<script>
+    $('#local-btn').on('click', function(){
+      if($('#local-btn').hasClass('active')){
+        console.log(1);
+      }
+      // $('.row-master').removeClass('row-master').addClass('local-master');
+      // $('.item_local').removeClass('col-xl-3').addClass('col-xl-4');
+      // $('#local-iframe').attr("hidden", false);
+    });
+</script>
